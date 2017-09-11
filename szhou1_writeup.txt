@@ -1,0 +1,167 @@
+Shirley Zhou
+szhou1
+12/08/15
+Section A
+PA 9
+Mancala
+
+Interface
+
+High-level inputs:
+-list index of the house that a player wants to make a move from
+
+High-level outputs:
+-the houses on the board with new distributed number of pits in each house
+-terminal output indicating if a player has won
+
+Algorithms
+new_board()
+1. create list with 13 indices
+2. each index should have a value of 4
+3. index 6 and 13 should have values of 0
+
+get_available_moves(board, player)
+1. takes list board
+2. for player 0 check if indices 0, 1, 2, 10, 11, and 12 have values that are not 0
+3. for player 1 check if indices 3, 4, 5, 7, 8, 9 have values that are not 0 in them
+4. return a list with the indices of list board that have pebbles in them for the
+   respective player
+
+is_plyr_house(player, pit)
+1. checks if player is 0 or 1 
+2. checks if pit (a list index of board) is on respective player's side of board
+3. return True if yes, return False if no
+
+has_move(board, player)
+1. call get_available_moves(board, player)
+2. if list returned by get_available_moves is not empty, return True
+3. else, return False
+
+is_end_match(board)
+1. check if all of the values in board (besides indices 6 and 13) are 0
+2. return True if yes, return False if no
+
+is_win(board)
+1. checks if board[6] is equal to board[13]
+2. If yes, then print "It's a tie" return False
+3. If no, check whether board[6] or board[13] has the larger value
+4. print "Player[] wins!" with the player that corresponds with the larger board value
+   return True
+
+get_pebble_coors(pit)
+1. randomly pick coordinates within given pit coordinates using randint()
+2. coordinates must be that of a pebble whose edges are inside
+   inner padding of the pit 
+3. leaving about 20 pixels of space for both the radius of the pebble and the padding itself
+4. pebble stores and pebble houses have different padding measurements
+
+display_board()
+1. use tkinter
+2. must draw rectangle for board using draw_pit()
+3. draw circles for pebbles using draw_pebble()
+4. use a for loop or while loop to repeatedly draw all pebbles
+5. must draw pebble counts for each pit using given function draw_pebble_count()
+
+pick_pit(board, player)
+1.  checks if number inputted by user is a valid pit
+2.  if valid, return the pit as an integer value
+3. if not valid, ask user for new input until valid input received
+
+distr_pebbles(board, pit, pebbles, player, ai_opt)
+1. checks whether player is 0 or 1, takes pit inputted by player
+2. check for pit value in the list board
+3. distributed pebbles in corresponding pit and make sure not to place 
+   pebble in opponent's store
+
+run_turn(pit, board, player, ai_opt)
+1. pick up all pebbles in chosen pit
+2. distribute pebbles
+3. check if last house receiving pebbles has more pebbles
+4. repeat until reaches a house that was initially empty (aka end of turn)
+
+switch_plyr(board, player)
+1. returns the value of player opposing the input player
+2. if opposing player has no available moves print "player[] has no available moves" and return the current player
+
+run_game(ai_opt)
+1. takes boolean ai_opt
+2. if True, all functions needed for game should run through run_with_ai()
+3. display_board should not be included if True
+4. if False, while is_end_match() is False player 0 should initiate
+5. call pick_pit through a variable move
+6. call run turn through a variable board
+7. switch player when there are no more moves
+8. break out of while loop is the match is over
+9. check if there is a win
+
+******Data Structures*****
+
+-a list with the indices being the total number of pits on the board
+and the values of the list being the number of pebbles in each house or store.
+
+
+*****Code Structure*******
+
+new_board(): returns the original list that represents the Mancala 
+board at the start of  game
+
+get_available_moves(board, player): takes parameter board (a list 
+that represents current state of the board) and player (an integer 
+that represents the current player and returns a list of integers 
+representing pits that are valid moves)
+
+is_plyr_house(player, pit): takes the parameters player and pit and 
+returns True if the given pit is a house on the side of the board of 
+the respective player
+
+has_move(board, player): takes parameters board and player, checks 
+whether given player has any pebbles in the houses on his side of board
+and returns True if there are and False if there are not.
+***calls get_available_moves() as helper function
+
+is_end_match(board): takes parameter board and returns True if there
+are no more pebbles left in any of the houses (match is over).
+
+is_win(board): checks parameter board for a win by either player or
+a tie. Prints feedback telling user about win/tie and returns Boolean
+representing that (True for win, False for Tie or Loss).
+
+get_pebble_coors(pit): picks random location within bounds of the pit 
+to draw a pebble. 
+
+display_board(board, player): uses the given draw functions draw_pit(), 
+draw_pebble(), and draw_pebble_count(), then draws body of board, the 
+houses and stores on the board, pebble counts for each pit, and the pebbles
+inside the appropriate pits.
+***calls get_pit_coors(), draw_pit(), draw_pebble_count(), get_pebble_coors(), and draw_pebble() as helper functions
+
+pick_pit(board, player): takes parameters board and player and returns the
+pit picked by said player(an integer will represent the pit)
+***calls get_available_moves() as helper function
+
+distr_pebbles(board, pit, pebbles, player, ai_opt): takes handful of pebbles 
+from pit and distrbutes pebbles to each pit. Funtion takes into account player 
+to determine which pit representing a player's store will be skipped, and 
+should update view after each pebble dropped
+***calls display_board() as helper function
+
+run_turn(pit, board, player, ai_opt): runs a turn of the game, returns list 
+representing state of board at end of turn.
+***calls distr_pebbles()
+
+switch_plyr(board, player): takes parameters board and player and returns an 
+integer representing opponent of the input player
+
+run_game(ai_opt): takes parameter ai_opt, a boolean, which represents whether 
+or not the player's opponent is a computer. This runs all functions needed for 
+game to work if ai_opt is True, otherwise, if ai_opt is False the function 
+will keep running until is_end_match() returns True. 
+***requires run_with-ai(), pick_pit(), run_turn(), is_end_match(), is_win(), quit_game()
+
+
+
+
+
+
+
+
